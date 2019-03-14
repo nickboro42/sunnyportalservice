@@ -1,0 +1,13 @@
+.THIS .customthead thead tr th {
+    background-color: #004a7f !important;
+    color: white;
+}
+
+.THIS .customthead tr:hover td {
+    background-color: #e5f4ff !important;
+    
+}
+
+.THIS .customthead tbody > tr:nth-child(even) td{
+    background-color: #f6fbff;
+}

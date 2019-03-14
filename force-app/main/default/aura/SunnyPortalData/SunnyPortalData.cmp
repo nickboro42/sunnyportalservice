@@ -1,0 +1,82 @@
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes" access="global" controller="SunnyPortalRestController" >
+	<aura:attribute name="plants" type="PlantListResult[]"/> 
+	<aura:attribute name="devices" type="DeviceListResult[]" />
+	<aura:attribute name="deviceData" type="DeviceDataResult[]" />
+	<aura:attribute name="user" type="String" default="k.kube@t-online.de"/> 
+	<aura:attribute name="password" type="String" default="Sunny0100" />
+	<aura:attribute name="selectedPlantName" type="String" />
+	<aura:attribute name="selectedPlantOid" type="String" />
+	<aura:attribute name="selectedDevice" type="String" />
+<div class="slds-box slds-theme_default">
+<center><lightning:button label="Get Plant List" iconName="utility:download" iconPosition="right" variant="brand" onclick="{!c.getPlantList}" /></center>
+	<aura:if isTrue="{!v.plants}">
+	<lightning:accordion aura:id="accordion" activeSectionName="A">
+		<lightning:accordionSection class="slds-box slds-theme_default" name="A" label="MyPvPlants">
+			<aura:set attribute="body">
+					<table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout customthead">
+							<thead>
+								<tr class="slds-text-heading_label">
+								<th scope="col"><div class="slds-truncate" title="ID">Plant Name</div></th>
+								<th scope="col"><div class="slds-truncate" title="Name">Plant Identifier</div></th>
+								<th scope="col"><div class="slds-truncate" title="Name">Action</div></th>
+								</tr>
+							</thead>
+							<tbody>
+								<aura:iteration items="{! v.plants}" var="plant">
+									
+										<tr>
+											<td><div class="slds-truncate" title="{!plant.plantName}">{!plant.objName}</div></td>
+											<td><div class="slds-truncate" title="{!plant.plantOid}">{!plant.objOid}</div></td>
+											<td>																		  
+														<lightning:button
+														label="Get Devices"
+														iconName="utility:download"
+														iconPosition="right"
+														variant="Brand"
+														type="button"
+														onclick="{!c.getPlantDevices}"
+														value="{!plant}"
+														/>
+																										
+												</td>
+										</tr>
+								</aura:iteration>
+							</tbody>
+					</table>
+			</aura:set>
+		</lightning:accordionSection>
+		<lightning:accordionSection class="slds-box slds-theme_default" name="B" label="{!'DEVICES: '+ v.selectedPlantName}">
+			<table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout customthead">
+					<thead>
+						<tr class="slds-text-heading_label">
+						<th scope="col"><div class="slds-truncate" title="ID">Device Name</div></th>
+						<th scope="col"><div class="slds-truncate" title="Name">Serial Number</div></th>
+						<th scope="col"><div class="slds-truncate" title="Name">Action</div></th>
+						</tr>
+					</thead>
+					<tbody>
+						<aura:iteration items="{!v.devices}" var="device">
+							
+								<tr>
+									<td><div class="slds-truncate" title="{!device.deviceName}">{!device.objName}</div></td>
+									<td><div class="slds-truncate" title="{!device.deviceSerialNumber}">{!device.objSerialNumber}</div></td>
+										<td>																		  
+											<lightning:button
+											label="Get Create Case"
+											iconName="utility:download"
+											iconPosition="right"
+											variant="Brand"
+											type="button"
+											onclick=""
+											value="{!device}"
+											/>										
+									</td>
+								</tr>
+						</aura:iteration>
+					</tbody>
+			</table>
+		</lightning:accordionSection>
+	</lightning:accordion>
+</aura:if>
+</div>
+</aura:component>
